@@ -12,7 +12,7 @@ export function Header() {
 
         <div>
           <Localization>
-            <HiLocationMarker size={22} color='#4B2995' />
+            <HiLocationMarker size={22} color='#8047F8' />
             Porto Alegre, SC
           </Localization>
 
