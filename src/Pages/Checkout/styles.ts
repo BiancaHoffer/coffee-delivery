@@ -5,6 +5,7 @@ export const CheckoutContainer = styled.div`
     height: auto;
     padding: 0px 0.75rem;
     margin: 0 auto;
+    margin: 2.5rem auto;
 
     display: flex;
     justify-content: space-between;
@@ -15,7 +16,7 @@ export const CheckoutContainer = styled.div`
         font-size: 1.125rem;
         font-weight: 800;
         color: ${props => props.theme["gray-800"]};
-        margin: 2.5rem 0 0.938rem 0;
+        margin-bottom: 1.375rem;
     }
 `
 

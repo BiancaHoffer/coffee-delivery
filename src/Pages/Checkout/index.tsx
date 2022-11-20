@@ -11,8 +11,6 @@ import { SessionPayment } from './components/SessionPayment';
 import { SessionAddress } from './components/SessionAddress';
 import { SessionCoffeeSelected } from './components/SessionCoffeeSelected';
 
-
-
 export function Checkout() {
   return (
     <CheckoutContainer>

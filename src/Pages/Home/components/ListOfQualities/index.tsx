@@ -5,7 +5,7 @@ import { SiCoffeescript } from "react-icons/si";
 import { ItemListOfQualities } from "../ItemListOfQualities";
 import { ListContainer } from "./styles";
 
-export function ListOfQualities() {
+export function BannerListOfQualities() {
   return (
     <ListContainer>
       <ItemListOfQualities

@@ -3,12 +3,17 @@ import { HiLocationMarker } from 'react-icons/hi'
 import { IoCart } from 'react-icons/io5';
 
 import logo from '../../assets/Logo.svg';
+import { ButtonCart } from "../ButtonCart";
+import { NavLink } from "react-router-dom";
 
 export function Header() {
   return (
     <HeaderContainer>
       <nav>
-        <img src={logo} alt="Logo Coffee Delivery" />
+        <NavLink to="/" title="home">
+          <img src={logo} alt="Logo Coffee Delivery" />
+        </NavLink>
+        
 
         <div>
           <Localization>
@@ -16,9 +21,11 @@ export function Header() {
             Porto Alegre, SC
           </Localization>
 
-          <Cart href="#">
-            <IoCart size={22} color='#C47F17'/>
-          </Cart>
+          <ButtonCart variant="yellow">
+            <NavLink to="/checkout" title="checkout">
+              <IoCart size={22} color="#C47F17" /> 
+            </NavLink>
+          </ButtonCart>
         </div>
       </nav>
     </HeaderContainer> 
