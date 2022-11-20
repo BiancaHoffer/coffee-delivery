@@ -4,21 +4,25 @@ export const ContainerCoffeeSelected = styled.div`
     padding: 2.5rem;
     max-width: 28rem;
     background: ${props => props.theme["gray-200"]};
-    border-radius: 0.375rem;
+    border-radius: 0.375rem 2.75rem 0.375rem 2.75rem;
 `
 
 export const CardCoffeeSelected = styled.div`
-    width: 23rem;
+    max-width: 23rem;
     display: grid;
     grid-template-columns: auto auto auto auto;
     grid-template-rows: auto auto;
-    //align-items: center;
+    padding-bottom: 2.5rem;
+    border-bottom: 1px solid ${props => props.theme["gray-300"]};
     gap: 1rem;
+
+    &:not(:first-child) {
+        padding-top: 2.5rem;
+    }
 
     img {
         width: 4rem;
         height: 4rem;
-
         grid-row: 1 / 3;
         grid-column: 1 / 1;
     }
@@ -27,12 +31,17 @@ export const CardCoffeeSelected = styled.div`
         grid-column: 2 / 4;
         font-size: 1rem;
         color: ${props => props.theme['gray-800']};
-        font-weight: 600;
     }
 
     span {
         grid-column: 4 / 4;
         grid-row: 1 / 3;
+        font-weight: 700;
+    }
+
+    .ContentAmountAndButtonRemove {
+        display: flex;
+        gap: 0.5rem;
     }
 
     .buttonRemove {
@@ -50,10 +59,6 @@ export const CardCoffeeSelected = styled.div`
     }
 `;
 
-export const ContainerAmountCoffeeButtonRemove = styled.div`
-    display: flex;
-    gap: 0.5rem;
-`
 
 export const AmountCoffee = styled.div`
     grid-column: 2 / 2; 
@@ -91,3 +96,42 @@ export const AmountCoffee = styled.div`
         justify-content: center;
     }
 `
+
+export const ContainerConfirmOrder = styled.div`
+    width: 100%; 
+    margin: 1.5rem 0;
+
+    button {
+        margin-top: 0.75rem;
+        width: 100%;
+        background: ${props => props.theme["yellow-500"]};
+        color: ${props => props.theme.white};
+        font-weight: 700;
+        font-size: 0.875rem;
+        padding: 0.75rem;
+        border: 0;
+        border-radius: 0.375rem;
+        cursor: pointer;
+    }
+`;
+
+export const PriceBase = styled.div`
+    width: 100%;
+    margin-bottom: 0.75rem;
+
+    display: flex;
+    justify-content: space-between;
+`;
+
+export const Price = styled(PriceBase)`
+    font-size: 0.875rem;
+    
+    .priceitem {
+        font-size: 1rem
+    }
+`
+
+export const TotalValue = styled(PriceBase)`
+    font-size: 1.25rem;
+    font-weight: 700;
+`;
