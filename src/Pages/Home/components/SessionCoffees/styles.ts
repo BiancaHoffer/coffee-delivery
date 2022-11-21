@@ -26,6 +26,7 @@ export const ContentCoffeeCard = styled.div`
     background: ${props => props.theme['gray-200']};
     border-radius: 0.375rem 2.25rem 0.375rem 2.25rem;
     padding: 1.5rem;
+    margin-bottom: 2.625rem;
 
     display: flex;
     flex-direction: column;
@@ -61,16 +62,17 @@ export const ContainerTag = styled.div`
     width: 100%;
 
     display: flex;
-    justify-content: space-around;
+    justify-content: space-evenly;
     align-items: center;
 
     p {
         background: ${props => props.theme["yellow-300"]};
-        padding: 0.5rem; 
+        padding: 0.25rem 0.5rem; 
         border-radius: 6.25rem;
         color: ${props => props.theme["yellow-800"]};
         font-size: 0.625rem;
         font-weight: 700;
+        text-transform: uppercase;
     }
 `
 

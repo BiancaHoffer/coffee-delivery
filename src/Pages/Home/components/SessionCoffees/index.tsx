@@ -6,44 +6,63 @@ import {
   GridAddCart,
 } from "./styles";
 
-import { IoCart } from "react-icons/io5";
+import { useContext } from 'react'
 
-import imageCoffee from '../../../../assets/coffee1.svg';
+import { IoCart } from "react-icons/io5";
 
 import { ButtonCart } from "../../../../components/ButtonCart";
 import { AmountCoffee } from "../../../../components/AmountCoffee";
 
+import { CoffeeTransactionContext } from "../../../../context/CoffeeTransactionContext";
+
 export function SessionCoffees() {
+  const { coffees } = useContext(CoffeeTransactionContext)
+
   return (
     <CoffeeSession>
       <h1>Nossos cafés</h1>
 
       <ContainerCoffeeCard>
-        <ContentCoffeeCard>
-          <img src={imageCoffee} />
-          <ContainerTag>
-            <p className="tag">
-              TRADICIONAL
-            </p>
-          </ContainerTag>
+        {coffees.map(coffee => {
+          return (
+            <ContentCoffeeCard key={coffee.id}>
+              <img src={coffee.image} alt={`Imagem ${coffee.title}`} />
+              <ContainerTag>
+                <p className="tag">
+                  {coffee.tags.tag1}
+                </p>
+                {coffee.tags.tag2 && (
+                  <p className="tag">
+                    {coffee.tags.tag2}
+                  </p>
+                )}
+                {coffee.tags.tag3 && (
+                  <p className="tag">
+                    {coffee.tags.tag3}
+                  </p>
+                )}
+              </ContainerTag>
 
-          <h2>Expresso Tradicional</h2>
-          <p className="description">
-            O tradicional café feito com água quente e grãos moídos
-          </p>
+              <h2>{coffee.title}</h2>
+              <p className="description">
+                {coffee.resume}
+              </p>
 
-          <GridAddCart>
-            <p className="valueCoffe">
-              <span>R$</span>9,90
-            </p>
-            <div className="contentAmountCoffeeAndButtonCart">
-              <AmountCoffee />
-              <ButtonCart variant="purple">
-                <IoCart size={22} color="#FAFAFA" />
-              </ButtonCart>
-            </div>
-          </GridAddCart>
-        </ContentCoffeeCard>
+              <GridAddCart>
+                <p className="valueCoffe">
+                  <span>R$</span>{coffee.price}
+                </p>
+                <div className="contentAmountCoffeeAndButtonCart">
+                  <AmountCoffee />
+                  <ButtonCart variant="purple">
+                    <IoCart size={22} color="#FAFAFA" />
+                  </ButtonCart>
+                </div>
+              </GridAddCart>
+            </ContentCoffeeCard>
+          )
+        })}
+        
       </ContainerCoffeeCard>
     </CoffeeSession>
   )

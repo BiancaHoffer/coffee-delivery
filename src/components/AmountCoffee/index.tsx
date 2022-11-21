@@ -5,9 +5,7 @@ import { ContainerAmountCoffee } from './styles';
 
 export function AmountCoffee() {
   const { amount, setAmountCoffee } = useContext(CoffeeTransactionContext);
-
-  console.log(amount)
-
+  
   return (
     <ContainerAmountCoffee>
         <button onClick={() => setAmountCoffee(amount - 1)}>

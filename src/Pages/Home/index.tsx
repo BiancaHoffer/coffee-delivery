@@ -7,8 +7,6 @@ import { SessionBanner } from './components/SessionBanner';
 import { AmountCoffee } from '../../components/AmountCoffee';
 
 export function Home() {
-  const [amount, setAmount] = useState(0);
-  
   return (
     <HomeContainer>
       <SessionBanner />    
