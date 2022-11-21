@@ -6,15 +6,18 @@ import { GlobalStyle } from './styles/global'
 import { Header } from './components/Header'
 import { Router } from './Router'
 import { defaultTheme } from './styles/themes/default'
+import { CoffeeTransactionProvider } from './context/CoffeeTransactionContext'
 
 export function App() {
   return (
     <BrowserRouter>
-      <ThemeProvider theme={defaultTheme}>      
-        <Header />
-        <Router />
-        <GlobalStyle />
-      </ThemeProvider>
+      <CoffeeTransactionProvider>
+        <ThemeProvider theme={defaultTheme}>      
+          <Header />
+          <Router />
+          <GlobalStyle />
+        </ThemeProvider>
+      </CoffeeTransactionProvider>
     </BrowserRouter>
   )
 }
