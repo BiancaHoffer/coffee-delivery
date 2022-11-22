@@ -114,9 +114,7 @@
             "resume": "Drink gelado de café expresso com rum, creme de leite e hortelã",
             "price": 9.90,
             "tags": {
-                "tag1": "Especial",
-                "tag2": "Alcoólico",
-                "tag3": "Gelado"
+                "tag": ["Especial", "Alcoólico", "Gelado"]
             }
         },
         {

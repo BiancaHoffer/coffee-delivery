@@ -4,20 +4,18 @@ import { CartContext } from '../../context/CartContext';
 import { ContainerAmountCoffee } from './styles';
 
 export function AmountCoffee() {
-  const { amount, setAmountCoffee } = useContext(CartContext);
-  
   return (
     <ContainerAmountCoffee>
-        <button onClick={() => setAmountCoffee(Number(amount - 1))}>
+        <button>
             <BiMinus size={16} color='#8047F8' />
         </button>
         <input 
           type="number" 
-          value={amount} 
-          onChange={e => setAmountCoffee(Number(e.target.value))}
+          //value={amount} 
+          //onChange={e => setAmountCoffee(Number(e.target.value))}
           placeholder="0" 
         />
-        <button onClick={() => setAmountCoffee(Number(amount + 1))}>
+        <button>
             <BiPlus size={16} color='#8047F8' />
         </button>
     </ContainerAmountCoffee>
