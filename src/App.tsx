@@ -6,18 +6,19 @@ import { GlobalStyle } from './styles/global'
 import { Header } from './components/Header'
 import { Router } from './Router'
 import { defaultTheme } from './styles/themes/default'
-import { CoffeeTransactionProvider } from './context/CoffeeTransactionContext'
+import { CartProvider } from './context/CartContext'
+
 
 export function App() {
   return (
     <BrowserRouter>
-      <CoffeeTransactionProvider>
+      <CartProvider>
         <ThemeProvider theme={defaultTheme}>      
           <Header />
           <Router />
           <GlobalStyle />
         </ThemeProvider>
-      </CoffeeTransactionProvider>
+      </CartProvider>
     </BrowserRouter>
   )
 }

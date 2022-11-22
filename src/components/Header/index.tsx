@@ -7,6 +7,18 @@ import { ButtonCart } from "../ButtonCart";
 import { NavLink } from "react-router-dom";
 
 export function Header() {
+  // const { cart } = useContext();
+  // const cartSize = cart.length - quantos itens o carrinho possui 
+
+  /*
+  { cartSize && (
+    <span>
+      3    
+    </span>
+  )}
+  
+  */
+
   return (
     <HeaderContainer>
       <nav>

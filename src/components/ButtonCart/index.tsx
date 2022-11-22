@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { ReactNode, MouseEventHandler, DOMAttributes } from 'react';
 import { IoCart } from "react-icons/io5";
 import { ContainerButtonCart, ColorButtonProps } from "./styles";
 

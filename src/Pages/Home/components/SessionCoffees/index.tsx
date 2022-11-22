@@ -13,10 +13,14 @@ import { IoCart } from "react-icons/io5";
 import { ButtonCart } from "../../../../components/ButtonCart";
 import { AmountCoffee } from "../../../../components/AmountCoffee";
 
-import { CoffeeTransactionContext } from "../../../../context/CoffeeTransactionContext";
+import { CartContext } from "../../../../context/CartContext";
 
 export function SessionCoffees() {
-  const { coffees } = useContext(CoffeeTransactionContext)
+  const { coffees, addCoffee } = useContext(CartContext)
+
+  function handleAddCoffee(id: number){
+    addCoffee(id);
+  }
 
   return (
     <CoffeeSession>
@@ -54,9 +58,13 @@ export function SessionCoffees() {
                 </p>
                 <div className="contentAmountCoffeeAndButtonCart">
                   <AmountCoffee />
-                  <ButtonCart variant="purple">
+                  <button 
+                    //variant="purple"
+                    onClick={() => handleAddCoffee(coffee.id)}
+                  
+                  >
                     <IoCart size={22} color="#FAFAFA" />
-                  </ButtonCart>
+                  </button>
                 </div>
               </GridAddCart>
             </ContentCoffeeCard>
