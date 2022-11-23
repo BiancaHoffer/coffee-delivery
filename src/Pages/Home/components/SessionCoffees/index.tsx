@@ -28,39 +28,15 @@ export interface CoffeeData {
     tag2: string;
     tag3: string;
   };
-  
-}
-
-interface newItemData {
-  id: number;
-  price: number;
-  image: string;
-  title: string;
   amount?: number;
 }
 
 export function SessionCoffees() {
   const [coffees, setCoffees] = useState<CoffeeData[]>([]);
-  const [cart, setCart] = useState<newItemData[]>([]); // vazio
-  const [coffeeIdSelected, setCoffeeIdSelected] = useState<number | null>(null);
-  const [amount, setAmount] = useState(1);
+  //const [cart, setCart] = useState<CoffeeData[]>([]); // vazio
+  const [coffeeSelectedId, setCoffeeSelectedId] = useState<number | null >(null);
 
-  function addItemToCart(data: newItemData) {
-    const newItem: newItemData  = {
-      id: data.id,
-      price: data.price,
-      image: data.image,
-      title: data.title,
-      amount,
-    }
-
-    setCart(state => [...state, newItem]);
-    setCoffeeIdSelected(data.id);
-
-    console.log("cart:", cart)
-    //console.log("items:", coffees)
-    //console.log("id selecionado", coffeeIdSelected)
-  }
+  const { cart, addCoffeeToCart } = useCart()
 
   useEffect(() => {
     async function getCoffes() {
@@ -75,7 +51,7 @@ export function SessionCoffees() {
   return (
     <CoffeeSession>
       <h1>Nossos cafés</h1>
-
+      <p>{JSON.stringify(cart, null, 2)}</p>
       <ContainerCoffeeCard>
         {coffees.map((coffee) => {
           return (
@@ -110,7 +86,7 @@ export function SessionCoffees() {
                   <AmountCoffee />
                   <button 
                     //variant="purple"
-                    onClick={() => addItemToCart(coffee)}
+                    onClick={() => addCoffeeToCart(coffee.id)}
                   >
                     <IoCart size={22} color="#FAFAFA" />
                   </button>

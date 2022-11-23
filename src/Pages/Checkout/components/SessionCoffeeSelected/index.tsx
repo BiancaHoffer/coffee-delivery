@@ -10,10 +10,23 @@ import { CiTrash } from 'react-icons/ci'
 
 import imageCoffee from '../../../../assets/coffee1.svg';
 import { AmountCoffee } from "../../../../components/AmountCoffee";
+import { useCart } from "../../../../hooks/useCart";
 
 export function SessionCoffeeSelected() {
+  const { cart } = useCart()
+  
+  console.log(cart)
+
   return (
     <ContainerCoffeeSelected>
+      {cart.map((a: any) => {
+        return (
+          <>
+            <p>{a.title}</p>
+            <p>{a.amount}</p>
+          </>
+        )
+      })}
       <CardCoffeeSelected>
         <img src={imageCoffee} alt="Imagem expresso tradicional" />
         <p>Expresso Tradicional</p>
