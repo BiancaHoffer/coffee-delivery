@@ -16,42 +16,55 @@ import { AmountCoffee } from "../../../../components/AmountCoffee";
 import { CartContext } from "../../../../context/CartContext";
 import { api } from "../../../../services/api";
 import { useCart } from "../../../../hooks/useCart";
+import { Coffee } from "../../../../@types/types";
 
-export interface CoffeeData {
-  id: number;
-  price: number;
-  image: string;
-  title: string;
-  resume: string;
-  tags: {
-    tag1: string;
-    tag2: string;
-    tag3: string;
-  };
-  amount?: number;
+interface CoffeeFormattedPrice extends Coffee {
+  priceFormattd: string; 
+}
+
+interface CartItemsAmount {
+  [key: number]: number;
 }
 
 export function SessionCoffees() {
-  const [coffees, setCoffees] = useState<CoffeeData[]>([]);
-  //const [cart, setCart] = useState<CoffeeData[]>([]); // vazio
-  const [coffeeSelectedId, setCoffeeSelectedId] = useState<number | null >(null);
+  const [coffees, setCoffees] = useState<CoffeeFormattedPrice[]>([]);
 
-  const { cart, addCoffeeToCart } = useCart()
+  const { cart, addCoffeeToCart } = useCart();
+
+   // listar quantiadade de itens por id
+   const cartCoffeesAmount = cart.reduce((sumAmount: any, coffee: any) => {
+    // criei novo objeto, ou seja uma cópia de sumAmount
+    const copySumAmount = {...sumAmount};
+    // pegando produto pelo id = pegando amount do café especifico
+    copySumAmount[coffee.id] = coffee.amount;
+
+    return copySumAmount;
+  }, {} as CartItemsAmount)
 
   useEffect(() => {
     async function getCoffes() {
-       const response = await api.get('/coffees');
-       const data = await response.data;
+       const response = await api.get<Coffee[]>('/coffees');
+
+       const data  = response.data.map(product => ({
+        ...product, 
+        priceFormattd: new Intl.NumberFormat('pt-bt', {
+          style: 'currency',
+          currency: 'BRL'
+        }).format(product.price)
+       })) 
+       
        setCoffees(data);
     }
     getCoffes();
    }, []);
 
+   function handleAddCoffee(id: number) {
+    addCoffeeToCart(id)
+   }
 
   return (
     <CoffeeSession>
       <h1>Nossos cafés</h1>
-      <p>{JSON.stringify(cart, null, 2)}</p>
       <ContainerCoffeeCard>
         {coffees.map((coffee) => {
           return (
@@ -80,17 +93,19 @@ export function SessionCoffees() {
 
               <GridAddCart>
                 <p className="valueCoffe">
-                  <span>R$</span>{coffee.price}
+                  {coffee.priceFormattd}
                 </p>
                 <div className="contentAmountCoffeeAndButtonCart">
-                  <AmountCoffee />
-                  <button 
-                    //variant="purple"
-                    onClick={() => addCoffeeToCart(coffee.id)}
+                  <AmountCoffee coffeeId={coffee.id} />
+                  <ButtonCart 
+                    variant="purple"
+                    onClick={() => handleAddCoffee(coffee.id)}
                   >
                     <IoCart size={22} color="#FAFAFA" />
-                  </button>
+                  </ButtonCart>
                 </div>
+                <input value={cartCoffeesAmount[coffee.id] || 0}/>
+                
               </GridAddCart>
             </ContentCoffeeCard>
           )

@@ -13,32 +13,34 @@ import { AmountCoffee } from "../../../../components/AmountCoffee";
 import { useCart } from "../../../../hooks/useCart";
 
 export function SessionCoffeeSelected() {
-  const { cart } = useCart()
-  
-  console.log(cart)
+  const { cart, removeProductToCart } = useCart();
+
+  function handleProductToCart(id: number) {
+    removeProductToCart(id)
+  }
 
   return (
     <ContainerCoffeeSelected>
-      {cart.map((a: any) => {
+      {cart.map((item) => {
         return (
-          <>
-            <p>{a.title}</p>
-            <p>{a.amount}</p>
-          </>
+          <CardCoffeeSelected key={item.id}>
+            <img src={item.image} alt={`Imagem ${item.title}`} />
+            <p>{item.title}</p>
+            <div className="ContentAmountAndButtonRemove">
+              <AmountCoffee />
+              <button 
+                className="buttonRemove" 
+                onClick={() => handleProductToCart(item.id)}
+              >
+                <CiTrash size={15} color='#8047F8' />
+                REMOVER
+              </button>
+            </div>
+            <span>R$ 9.90</span>
+          </CardCoffeeSelected>
         )
       })}
-      <CardCoffeeSelected>
-        <img src={imageCoffee} alt="Imagem expresso tradicional" />
-        <p>Expresso Tradicional</p>
-        <div className="ContentAmountAndButtonRemove">
-          <AmountCoffee />
-          <button className="buttonRemove">
-            <CiTrash size={15} color='#8047F8' />
-            REMOVER
-          </button>
-        </div>
-        <span>R$ 9.90</span>
-      </CardCoffeeSelected>
+      
 
       <ContainerConfirmOrder>
         <Price>
