@@ -5,7 +5,7 @@ import { ContainerButtonCart, ColorButtonProps } from "./styles";
 interface ButtonCartProps {
     variant: "purple" | "yellow";
     children: ReactNode;
-    onClick: MouseEventHandler;
+    onClick?: MouseEventHandler;
 }
 
 export function ButtonCart({ variant, children, onClick }: ButtonCartProps) {
