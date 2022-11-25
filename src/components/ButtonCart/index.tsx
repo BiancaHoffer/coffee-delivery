@@ -1,5 +1,6 @@
 import { ReactNode, MouseEventHandler, DOMAttributes } from 'react';
 import { IoCart } from "react-icons/io5";
+import { useCart } from '../../hooks/useCart';
 import { ContainerButtonCart, ColorButtonProps } from "./styles";
 
 interface ButtonCartProps {

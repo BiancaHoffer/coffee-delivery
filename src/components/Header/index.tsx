@@ -5,19 +5,11 @@ import { IoCart } from 'react-icons/io5';
 import logo from '../../assets/Logo.svg';
 import { ButtonCart } from "../ButtonCart";
 import { NavLink } from "react-router-dom";
+import { useCart } from "../../hooks/useCart";
 
 export function Header() {
-  // const { cart } = useContext();
-  // const cartSize = cart.length - quantos itens o carrinho possui 
-
-  /*
-  { cartSize && (
-    <span>
-      3    
-    </span>
-  )}
-  
-  */
+  const { cart } = useCart();
+  const cartSize = cart.length; //quantos arrays cart possui 
 
   return (
     <HeaderContainer>
@@ -26,7 +18,6 @@ export function Header() {
           <img src={logo} alt="Logo Coffee Delivery" />
         </NavLink>
         
-
         <div>
           <Localization>
             <HiLocationMarker size={22} color='#8047F8' />
@@ -36,8 +27,9 @@ export function Header() {
           <ButtonCart variant="yellow">
             <NavLink to="/checkout" title="checkout">
               <IoCart size={22} color="#C47F17" /> 
+              { !cartSize ? null :  <span>{cartSize}</span>}
             </NavLink>
-          </ButtonCart>
+          </ButtonCart> 
         </div>
       </nav>
     </HeaderContainer> 

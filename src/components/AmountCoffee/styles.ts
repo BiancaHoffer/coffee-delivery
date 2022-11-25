@@ -30,9 +30,14 @@ export const ContainerAmountCoffee = styled.div`
         cursor: pointer;
         border: 0;
         background: transparent;
+        color: ${props => props.theme["purple-500"]};
 
         display: flex;
         align-items: center;
         justify-content: center;
+
+        &:disabled {
+            color: ${props => props.theme["gray-400"]};
+        }
     }
 `

@@ -4,6 +4,7 @@ import {
   ContentCoffeeCard, 
   ContainerTag, 
   GridAddCart,
+  ContainerAmountCoffee,
 } from "./styles";
 
 import { useState, useEffect } from 'react';
@@ -11,12 +12,12 @@ import { useState, useEffect } from 'react';
 import { IoCart } from "react-icons/io5";
 
 import { ButtonCart } from "../../../../components/ButtonCart";
-import { AmountCoffee } from "../../../../components/AmountCoffee";
 
-import { CartContext } from "../../../../context/CartContext";
 import { api } from "../../../../services/api";
 import { useCart } from "../../../../hooks/useCart";
 import { Coffee } from "../../../../@types/types";
+import { BiMinus, BiPlus } from "react-icons/bi";
+import { AmountCoffee } from "../../../../components/AmountCoffee";
 
 interface CoffeeFormattedPrice extends Coffee {
   priceFormattd: string; 
@@ -85,7 +86,6 @@ export function SessionCoffees() {
                   </p>
                 )}
               </ContainerTag>
-
               <h2>{coffee.title}</h2>
               <p className="description">
                 {coffee.resume}
@@ -96,7 +96,18 @@ export function SessionCoffees() {
                   {coffee.priceFormattd}
                 </p>
                 <div className="contentAmountCoffeeAndButtonCart">
-                  <AmountCoffee coffeeId={coffee.id} />
+                  <ContainerAmountCoffee>
+                    <button disabled={true}>
+                        <BiMinus size={16} />
+                    </button>
+                    <input 
+                      type="number" 
+                      value={cartCoffeesAmount[coffee.id] || 0} 
+                    />
+                    <button disabled={true}>
+                        <BiPlus size={16} />
+                    </button>
+                  </ContainerAmountCoffee>
                   <ButtonCart 
                     variant="purple"
                     onClick={() => handleAddCoffee(coffee.id)}
@@ -104,13 +115,10 @@ export function SessionCoffees() {
                     <IoCart size={22} color="#FAFAFA" />
                   </ButtonCart>
                 </div>
-                <input value={cartCoffeesAmount[coffee.id] || 0}/>
-                
               </GridAddCart>
             </ContentCoffeeCard>
           )
         })}
-        
       </ContainerCoffeeCard>
     </CoffeeSession>
   )

@@ -8,11 +8,17 @@ interface CartProviderProps {
     children: ReactNode;
 }   
 
+interface uptadeProductAmountProps {
+    id: number;
+    amount: number;
+}
+
 interface CartContextData {
     cart: Coffee[];
     amount: number;
     addCoffeeToCart: (id: number) => void;
     removeProductToCart: (id: number) => void;
+    uptadeProductAmount: (props: uptadeProductAmountProps) => void
 }
 
 export const CartContext = createContext({} as CartContextData);
@@ -102,8 +108,32 @@ export function CartProvider({ children }: CartProviderProps) {
         }
     }
 
+    async function uptadeProductAmount({id, amount}: uptadeProductAmountProps) {
+        try {
+            if (amount <= 0 ) {
+                return;
+            }
+
+            const copyCart = [...cart];
+            const coffeeExistsInCart = copyCart.find((coffee) => coffee.id === id);
+
+            // verificar se produto existe no carrinho
+            if (coffeeExistsInCart) {
+                // coffeeExistsInCart.amount recebe amount
+                coffeeExistsInCart.amount = amount;
+                setCart(copyCart);
+                localStorage.setItem('@CoffeeDelivery:cart', JSON.stringify(copyCart));
+            } else {
+                throw Error();
+            }
+
+        } catch {
+            toast.error('Erro na alteração de quantidade do produto');
+        }
+    }
+
     return (
-        <CartContext.Provider value={{ amount, cart, addCoffeeToCart, removeProductToCart }}>
+        <CartContext.Provider value={{ amount, cart, addCoffeeToCart, removeProductToCart, uptadeProductAmount }}>
             { children }
         </CartContext.Provider>
     )

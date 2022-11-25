@@ -1,44 +1,37 @@
-import { useContext, useEffect } from 'react';
+import { useState } from 'react';
 import { BiMinus, BiPlus } from "react-icons/bi";
+import { Coffee } from '../../@types/types';
 import { useCart } from '../../hooks/useCart';
-import { api } from '../../services/api';
-import { ContainerAmountCoffee } from './styles';
+import { ContainerAmountCoffee } from "./styles";
 
-interface CartItemsAmount {
-  [key: number]: number;
+interface AmountCoffeeProps {
+    value: number;
+    coffee: Coffee;
+    disabled?: boolean;
 }
 
-export function AmountCoffee(coffeeId: any) {
-  const { cart } = useCart();
-  
- // listar quantiadade de itens por id
- const cartCoffeesAmount = cart.reduce((sumAmount: any, coffee: any) => {
-  // criei novo objeto, ou seja uma cópia de sumAmount
-  const copySumAmount = {...sumAmount};
-  // pegando produto pelo id = pegando amount do café especifico
-  copySumAmount[coffee.id] = coffee.amount;
+export function AmountCoffee({ value, coffee, disabled }: AmountCoffeeProps) {
+    const { cart, uptadeProductAmount } = useCart();
 
-  return copySumAmount;
-}, {} as CartItemsAmount)
+    function handleCoffeeIncrement(coffee: Coffee) {
+    uptadeProductAmount({ id: coffee.id, amount: coffee.amount + 1 })
+    }
 
+    function handleCoffeeDecrement(coffee: Coffee) {
+    uptadeProductAmount({ id: coffee.id, amount: coffee.amount - 1 })
+      }
 
-  return (
+    return (
     <ContainerAmountCoffee>
-        <button >
-            <BiMinus size={16} color='#8047F8' />
-            
+        <button onClick={() => handleCoffeeDecrement(coffee)} disabled={disabled}>
+              <BiMinus size={16} />  
         </button>
-        <p></p>
         <input 
-          //type="number" 
-          //value={cartCoffeesAmount[coffeeId] || 0} 
-          //onChange={e => amountState(Number(e.target.value))}
-          //placeholder="0" 
+            type="number" 
+            value={value} 
         />
-
-        <input value={cartCoffeesAmount[coffeeId] || 0 } />
-        <button >
-            <BiPlus size={16} color='#8047F8' />
+        <button onClick={() => handleCoffeeIncrement(coffee)}>
+            <BiPlus size={16} />
         </button>
     </ContainerAmountCoffee>
   );
