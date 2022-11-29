@@ -27,13 +27,13 @@ export function SessionCoffeeSelected() {
               <ContainerAmountCoffee>
                 <button 
                   onClick={() => amountState(amount - 1)}
-                  disabled={amount <= 1}>
+                  disabled={amount <= 1}
+                >
                     <BiMinus size={16} />
                 </button>
                 <input 
                   type="number" 
                   value={item.amount}
-                  disabled={item.amount <= 1}
                   readOnly
                 />
                 <button 
