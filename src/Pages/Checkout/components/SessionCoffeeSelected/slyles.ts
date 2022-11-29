@@ -107,13 +107,16 @@ export const ContainerConfirmOrder = styled.div`
         margin-top: 0.75rem;
         width: 100%;
         background: ${props => props.theme["yellow-500"]};
-        color: ${props => props.theme.white};
         font-weight: 700;
         font-size: 0.875rem;
         padding: 0.75rem;
         border: 0;
         border-radius: 0.375rem;
         cursor: pointer;
+
+        a {
+            color: ${props => props.theme.white};
+        }
     }
 `;
 

@@ -1,7 +1,5 @@
 import { useState } from 'react';
 import { BiMinus, BiPlus } from "react-icons/bi";
-import { Coffee } from '../../@types/types';
-import { useCart } from '../../hooks/useCart';
 import { ContainerAmountCoffee } from "./styles";
 
 interface AmountCoffeeProps {
@@ -11,26 +9,26 @@ interface AmountCoffeeProps {
 }
 
 export function AmountCoffee({ value, coffee, disabled }: AmountCoffeeProps) {
-    const { cart, uptadeProductAmount } = useCart();
+    //const { cart, uptadeProductAmount } = useCart();
 
-    function handleCoffeeIncrement(coffee: Coffee) {
-    uptadeProductAmount({ id: coffee.id, amount: coffee.amount + 1 })
-    }
+    //function handleCoffeeIncrement(coffee: Coffee) {
+    //uptadeProductAmount({ id: coffee.id, amount: coffee.amount + 1 })
+    //}
 
-    function handleCoffeeDecrement(coffee: Coffee) {
-    uptadeProductAmount({ id: coffee.id, amount: coffee.amount - 1 })
-      }
+    //function handleCoffeeDecrement(coffee: Coffee) {
+    //uptadeProductAmount({ id: coffee.id, amount: coffee.amount - 1 })
+    //}
 
     return (
     <ContainerAmountCoffee>
-        <button onClick={() => handleCoffeeDecrement(coffee)} disabled={disabled}>
+        <button disabled={disabled}>
               <BiMinus size={16} />  
         </button>
         <input 
             type="number" 
             value={value} 
         />
-        <button onClick={() => handleCoffeeIncrement(coffee)}>
+        <button>
             <BiPlus size={16} />
         </button>
     </ContainerAmountCoffee>

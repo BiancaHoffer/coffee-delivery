@@ -6,7 +6,8 @@ import { GlobalStyle } from './styles/global'
 import { Header } from './components/Header'
 import { Router } from './Router'
 import { defaultTheme } from './styles/themes/default'
-import { CartProvider } from './context/CartContext'
+import { CartProvider } from './hooks/useCart'
+
 
 
 export function App() {

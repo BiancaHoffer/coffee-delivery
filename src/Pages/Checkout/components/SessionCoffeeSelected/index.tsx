@@ -8,41 +8,16 @@ import {
 
 import { CiTrash } from 'react-icons/ci'
 
-import { useCart } from "../../../../hooks/useCart";
 import { AmountCoffee } from "../../../../components/AmountCoffee";
+import { NavLink } from "react-router-dom";
+import { useCart } from "../../../../hooks/useCart";
 
 export function SessionCoffeeSelected() {
-  const { cart, removeProductToCart, uptadeProductAmount } = useCart();
-
-  const priceFormatted = cart.map(coffee => ({
-    ...coffee,
-    priceFormatted: new Intl.NumberFormat('pt-bt', {
-      style: 'currency',
-      currency: 'BRL'
-    }).format(coffee.price),
-    subTotal: new Intl.NumberFormat('pt-bt', {
-      style: 'currency',
-      currency: 'BRL'
-    }).format(coffee.price * coffee.amount)
-  }))
-
-  const total = cart.reduce((sumTotal, coffee) => {
-    return sumTotal + coffee.price * coffee.amount + 3.50
-  }, 0)
-
-  const totalFormatted = new Intl.NumberFormat('pt-bt', {
-    style: 'currency',
-    currency: 'BRL'
-  }).format(total)
-
-
-  function handleRemoveCoffeeToCart(id: number) {
-    removeProductToCart(id)
-  }
-
+  const { cart } = useCart();
+  
   return (
     <ContainerCoffeeSelected>
-      {priceFormatted.map((item) => {
+      {cart.map((item) => {
         return (
           <CardCoffeeSelected key={item.id}>
             <img src={item.image} alt={`Imagem ${item.title}`} />
@@ -55,7 +30,6 @@ export function SessionCoffeeSelected() {
               />
               <button 
                 className="buttonRemove" 
-                onClick={() => handleRemoveCoffeeToCart(item.id)}
               >
                 <CiTrash size={15} color='#8047F8' />
                 REMOVER
@@ -68,7 +42,7 @@ export function SessionCoffeeSelected() {
       <ContainerConfirmOrder>
         <Price>
           <p>Total de itens </p>
-          <p className="priceitem">{totalFormatted}</p>
+          <p className="priceitem">{}</p>
         </Price>
         <Price>
           <p>Entrega</p>
@@ -76,9 +50,13 @@ export function SessionCoffeeSelected() {
         </Price>
         <TotalValue>
           <p>Total</p>
-          <p>{totalFormatted}</p>
+          <p>{}</p>
         </TotalValue>
-        <button>CONFIRMAR PEDIDO</button>
+        <button>
+          <NavLink to={'/checkout/success'}>
+            CONFIRMAR PEDIDO
+          </NavLink>
+        </button>
       </ContainerConfirmOrder>
     </ContainerCoffeeSelected>
   )

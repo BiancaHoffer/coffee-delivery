@@ -14,103 +14,125 @@ import { IoCart } from "react-icons/io5";
 import { ButtonCart } from "../../../../components/ButtonCart";
 
 import { api } from "../../../../services/api";
-import { useCart } from "../../../../hooks/useCart";
-import { Coffee } from "../../../../@types/types";
 import { BiMinus, BiPlus } from "react-icons/bi";
 import { AmountCoffee } from "../../../../components/AmountCoffee";
+import { formatPrice } from "../../../../utils/formatPrice";
+import { useCart, Cart } from "../../../../hooks/useCart";
 
-interface CoffeeFormattedPrice extends Coffee {
+export interface Product {
+  id: number;
+  price: number;
+  image: string;
+  title: string;
+  resume: string;
+  tags: {
+      tag1: string;
+      tag2: string;
+      tag3: string;
+  };
+  amount: number;
+}
+
+interface ProductFormatted extends Product {
   priceFormattd: string; 
 }
+
+interface AmountStateProps {
+  id: number;
+}
+
 
 interface CartItemsAmount {
   [key: number]: number;
 }
 
 export function SessionCoffees() {
-  const [coffees, setCoffees] = useState<CoffeeFormattedPrice[]>([]);
-
-  const { cart, addCoffeeToCart } = useCart();
-
-   // listar quantiadade de itens por id
-   const cartCoffeesAmount = cart.reduce((sumAmount: any, coffee: any) => {
+   /*// listar quantiadade de itens por id
+   const cartCoffeesAmount = cart.reduce((sumAmount, coffee: any) => {
     // criei novo objeto, ou seja uma cópia de sumAmount
     const copySumAmount = {...sumAmount};
     // pegando produto pelo id = pegando amount do café especifico
     copySumAmount[coffee.id] = coffee.amount;
 
     return copySumAmount;
-  }, {} as CartItemsAmount)
+  }, {} as CartItemsAmount)*/
+
+  const [products, setProducts] = useState<ProductFormatted[]>([]);
+
+  const { cart, addCart, amount, amountState} = useCart();
 
   useEffect(() => {
     async function getCoffes() {
-       const response = await api.get<Coffee[]>('/coffees');
+       const response = await api.get<Product[]>('/coffees');
 
-       const data  = response.data.map(product => ({
+       const data = response.data.map(product => ({
         ...product, 
-        priceFormattd: new Intl.NumberFormat('pt-bt', {
-          style: 'currency',
-          currency: 'BRL'
-        }).format(product.price)
+        priceFormattd: formatPrice(product.price),
        })) 
        
-       setCoffees(data);
+       setProducts(data);
     }
     getCoffes();
    }, []);
 
-   function handleAddCoffee(id: number) {
-    addCoffeeToCart(id)
-   }
+  function handleAddCart(id: number) {
+    addCart(id)
+  }
 
   return (
     <CoffeeSession>
       <h1>Nossos cafés</h1>
+      <p>{JSON.stringify(cart)}</p>
       <ContainerCoffeeCard>
-        {coffees.map((coffee) => {
+        {products.map((product) => {
           return (
-            <ContentCoffeeCard key={coffee.id}>
-              <img src={coffee.image} alt={`Imagem ${coffee.title}`} />
+            <ContentCoffeeCard key={product.id}>
+              <img src={product.image} alt={`Imagem ${product.title}`} />
               <ContainerTag>
                 <p className="tag">
-                  {coffee.tags.tag1}
+                  {product.tags.tag1}
                 </p>
-                {coffee.tags.tag2 && (
+                {product.tags.tag2 && (
                   <p className="tag">
-                    {coffee.tags.tag2}
+                    {product.tags.tag2}
                   </p>
                 )}
-                {coffee.tags.tag3 && (
+                {product.tags.tag3 && (
                   <p className="tag">
-                    {coffee.tags.tag3}
+                    {product.tags.tag3}
                   </p>
                 )}
               </ContainerTag>
-              <h2>{coffee.title}</h2>
+              <h2>{product.title}</h2>
               <p className="description">
-                {coffee.resume}
+                {product.resume}
               </p>
 
               <GridAddCart>
                 <p className="valueCoffe">
-                  {coffee.priceFormattd}
+                  {product.priceFormattd}
                 </p>
                 <div className="contentAmountCoffeeAndButtonCart">
                   <ContainerAmountCoffee>
-                    <button disabled={true}>
+                    <button 
+                      onClick={() => amountState(amount - 1)}
+                      disabled={amount <= 1}>
                         <BiMinus size={16} />
                     </button>
                     <input 
                       type="number" 
-                      value={cartCoffeesAmount[coffee.id] || 0} 
+                      value={amount}
+                      readOnly
                     />
-                    <button disabled={true}>
+                    <button 
+                      onClick={() => amountState(amount + 1)}
+                    >
                         <BiPlus size={16} />
                     </button>
                   </ContainerAmountCoffee>
                   <ButtonCart 
                     variant="purple"
-                    onClick={() => handleAddCoffee(coffee.id)}
+                    onClick={() => handleAddCart(product.id)}
                   >
                     <IoCart size={22} color="#FAFAFA" />
                   </ButtonCart>
