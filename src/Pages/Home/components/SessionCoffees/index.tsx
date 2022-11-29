@@ -15,7 +15,6 @@ import { ButtonCart } from "../../../../components/ButtonCart";
 
 import { api } from "../../../../services/api";
 import { BiMinus, BiPlus } from "react-icons/bi";
-import { AmountCoffee } from "../../../../components/AmountCoffee";
 import { formatPrice } from "../../../../utils/formatPrice";
 import { useCart, Cart } from "../../../../hooks/useCart";
 
