@@ -2,18 +2,19 @@ import {
   ContainerCoffeeSelected, 
   CardCoffeeSelected, 
   ContainerConfirmOrder,
+  ContainerAmountCoffee,
   Price,
   TotalValue,
 } from "./slyles";
 
 import { CiTrash } from 'react-icons/ci'
 
-import { AmountCoffee } from "../../../../components/AmountCoffee";
 import { NavLink } from "react-router-dom";
 import { useCart } from "../../../../hooks/useCart";
+import { BiMinus, BiPlus } from "react-icons/bi";
 
 export function SessionCoffeeSelected() {
-  const { cart } = useCart();
+  const { cart, amount, amountState } = useCart();
   
   return (
     <ContainerCoffeeSelected>
@@ -23,11 +24,25 @@ export function SessionCoffeeSelected() {
             <img src={item.image} alt={`Imagem ${item.title}`} />
             <p>{item.title}</p>
             <div className="ContentAmountAndButtonRemove">
-              <AmountCoffee 
-                coffee={item}
-                value={item.amount}
-                disabled={item.amount <= 1}
-              />
+              <ContainerAmountCoffee>
+                <button 
+                  onClick={() => amountState(amount - 1)}
+                  disabled={amount <= 1}>
+                    <BiMinus size={16} />
+                </button>
+                <input 
+                  type="number" 
+                  value={item.amount}
+                  disabled={item.amount <= 1}
+                  readOnly
+                />
+                <button 
+                  onClick={() => amountState(amount + 1)}
+                >
+                    <BiPlus size={16} />
+                </button>
+              </ContainerAmountCoffee>
+  
               <button 
                 className="buttonRemove" 
               >
