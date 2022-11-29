@@ -35,7 +35,7 @@ export function SessionCoffeeSelected() {
                 REMOVER
               </button>
             </div>
-            <span>{item.subTotal}</span>
+            <span>...</span>
           </CardCoffeeSelected>
         )
       })}
