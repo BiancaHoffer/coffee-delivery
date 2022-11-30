@@ -22,9 +22,19 @@ export const GlobalStyle = createGlobalStyle`
         text-decoration: none;
     }
 
-    textarea:focus, input:focus, select:focus {
-    box-shadow: 0 0 0 0;
-    border: 0 none;
-    outline: 0;
-} 
+        textarea:focus, input:focus, select:focus {
+        box-shadow: 0 0 0 0;
+        border: 0 none;
+        outline: 0;
+    } 
+
+    input[type=number]::-webkit-inner-spin-button { 
+    -webkit-appearance: none;
+    
+    }
+    input[type=number] { 
+    -moz-appearance: textfield;
+    appearance: textfield;
+
+    }
 `

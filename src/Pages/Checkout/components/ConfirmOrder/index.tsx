@@ -1,13 +1,15 @@
+import { useState } from 'react'
 import { NavLink } from "react-router-dom";
 import { useCart, Cart } from "../../../../hooks/useCart";
 import { formatPrice } from "../../../../utils/formatPrice";
 import { ContainerConfirmOrder, Price, TotalValue } from "./styles";
-
+import { useFormContext } from 'react-hook-form';
 
 
 export function ConfirmOrder() {
   const { totalProducts, totalShipping } = useCart();
-  
+  const { watch } = useFormContext();
+
   return (
     <ContainerConfirmOrder>
       <Price>
@@ -22,10 +24,8 @@ export function ConfirmOrder() {
         <p>Total</p>
         <p>{formatPrice(totalShipping)}</p>
       </TotalValue>
-      <button>
-        <NavLink to={'/checkout/success'}>
+      <button type="submit"> 
           CONFIRMAR PEDIDO
-        </NavLink>
       </button>
     </ContainerConfirmOrder>
   )

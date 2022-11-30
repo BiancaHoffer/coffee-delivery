@@ -8,24 +8,25 @@ import { CiMoneyBill } from 'react-icons/ci';
 
 import { 
     DivPayment,
-    TitlePayment,
     ContentPaymentMethod,
   } from "./styles";
+  
+import { TitleCheckout } from '../../../../components/TitleCheckout';
 
 export function SessionPayment() {
   const [typePayment, setTypePayment] = useState<'creditCard' | 'debitCard' | 'money'>('creditCard');
   
     return (
         <DivPayment>
-          <TitlePayment>
-            <BsCurrencyDollar
+          <TitleCheckout 
+            title='Pagamento'
+            subtitle='O pagamento é feito na entrega. Escolha a forma que deseja pagar'
+            icon={<BsCurrencyDollar
               size={22} 
               color='#8047F8'
               className="iconPayment" 
-            />
-            <h2>Pagamento</h2>
-            <p>O pagamento é feito na entrega. Escolha a forma que deseja pagar</p>
-          </TitlePayment>
+            />}
+          />
 
           <ContentPaymentMethod>
             <PaymentMethod 

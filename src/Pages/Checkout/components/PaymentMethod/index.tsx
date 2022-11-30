@@ -7,9 +7,10 @@ interface PaymentMethodProps {
     children: ReactNode;
 }
 
-export function PaymentMethod({ isActive,  onClick, children }: PaymentMethodProps) {    
+export function PaymentMethod({ isActive, onClick, children }: PaymentMethodProps) {    
     return (
         <RadioBox 
+            type="button"
             onClick={onClick}
             isActive={isActive}
         >

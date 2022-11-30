@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const CheckoutContainer = styled.div`
+export const CheckoutContainer = styled.form`
     max-width: 1144px;
     height: auto;
     padding: 0px 0.75rem;

@@ -28,6 +28,7 @@ export function SessionCoffeeSelected() {
           <CoffeeSelected key={item.id} item={item} />
         )
       })}
+      
       <ConfirmOrder />
     </ContainerCoffeeSelected>
   )

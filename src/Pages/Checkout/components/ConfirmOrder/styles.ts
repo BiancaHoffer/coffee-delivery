@@ -14,6 +14,11 @@ export const ContainerConfirmOrder = styled.div`
         border: 0;
         border-radius: 0.375rem;
         cursor: pointer;
+        color: ${props => props.theme.white};
+
+        &:disabled {
+            background: ${props => props.theme["yellow-800"]};
+        }
 
         a {
             color: ${props => props.theme.white};
