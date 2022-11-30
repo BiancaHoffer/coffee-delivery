@@ -1,10 +1,6 @@
 import {
   CoffeeSession,
-  ContainerCoffeeCard, 
-  ContentCoffeeCard, 
-  ContainerTag, 
-  GridAddCart,
-  ContainerAmountCoffee,
+  CoffeeList,
 } from "./styles";
 
 import { useState, useEffect } from 'react';
@@ -16,30 +12,13 @@ import { ButtonCart } from "../../../../components/ButtonCart";
 import { api } from "../../../../services/api";
 import { BiMinus, BiPlus } from "react-icons/bi";
 import { formatPrice } from "../../../../utils/formatPrice";
-import { useCart, Cart } from "../../../../hooks/useCart";
+import { useCart } from "../../../../hooks/useCart";
+import { CoffeeCard } from "../CoffeeCard";
+import { Product } from "../../../../@types/coffee";
 
-export interface Product {
-  id: number;
-  price: number;
-  image: string;
-  title: string;
-  resume: string;
-  tags: {
-      tag1: string;
-      tag2: string;
-      tag3: string;
-  };
-  amount: number;
-}
-
-interface ProductFormatted extends Product {
+export interface ProductFormatted extends Product {
   priceFormattd: string; 
 }
-
-interface AmountStateProps {
-  id: number;
-}
-
 
 interface CartItemsAmount {
   [key: number]: number;
@@ -58,10 +37,10 @@ export function SessionCoffees() {
 
   const [products, setProducts] = useState<ProductFormatted[]>([]);
 
-  const { cart, addCart, amount, amountState} = useCart();
+  const { cart } = useCart();
 
   useEffect(() => {
-    async function getCoffes() {
+    async function getProducts() {
        const response = await api.get<Product[]>('/coffees');
 
        const data = response.data.map(product => ({
@@ -71,76 +50,19 @@ export function SessionCoffees() {
        
        setProducts(data);
     }
-    getCoffes();
+    getProducts();
    }, []);
-
-  function handleAddCart(id: number) {
-    addCart(id)
-  }
 
   return (
     <CoffeeSession>
       <h1>Nossos cafés</h1>
-      <p>{JSON.stringify(cart)}</p>
-      <ContainerCoffeeCard>
+      <CoffeeList>
         {products.map((product) => {
           return (
-            <ContentCoffeeCard key={product.id}>
-              <img src={product.image} alt={`Imagem ${product.title}`} />
-              <ContainerTag>
-                <p className="tag">
-                  {product.tags.tag1}
-                </p>
-                {product.tags.tag2 && (
-                  <p className="tag">
-                    {product.tags.tag2}
-                  </p>
-                )}
-                {product.tags.tag3 && (
-                  <p className="tag">
-                    {product.tags.tag3}
-                  </p>
-                )}
-              </ContainerTag>
-              <h2>{product.title}</h2>
-              <p className="description">
-                {product.resume}
-              </p>
-
-              <GridAddCart>
-                <p className="valueCoffe">
-                  {product.priceFormattd}
-                </p>
-                <div className="contentAmountCoffeeAndButtonCart">
-                  <ContainerAmountCoffee>
-                    <button 
-                      onClick={() => amountState(amount - 1)}
-                      disabled={amount <= 1}>
-                        <BiMinus size={16} />
-                    </button>
-                    <input 
-                      type="number" 
-                      value={amount}
-                      readOnly
-                    />
-                    <button 
-                      onClick={() => amountState(amount + 1)}
-                    >
-                        <BiPlus size={16} />
-                    </button>
-                  </ContainerAmountCoffee>
-                  <ButtonCart 
-                    variant="purple"
-                    onClick={() => handleAddCart(product.id)}
-                  >
-                    <IoCart size={22} color="#FAFAFA" />
-                  </ButtonCart>
-                </div>
-              </GridAddCart>
-            </ContentCoffeeCard>
+            <CoffeeCard key={product.id} product={product} />
           )
         })}
-      </ContainerCoffeeCard>
+      </CoffeeList>
     </CoffeeSession>
   )
 }

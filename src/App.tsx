@@ -8,7 +8,8 @@ import { Router } from './Router'
 import { defaultTheme } from './styles/themes/default'
 import { CartProvider } from './hooks/useCart'
 
-
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export function App() {
   return (
@@ -17,6 +18,7 @@ export function App() {
         <ThemeProvider theme={defaultTheme}>      
           <Header />
           <Router />
+          <ToastContainer />
           <GlobalStyle />
         </ThemeProvider>
       </CartProvider>

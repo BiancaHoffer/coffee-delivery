@@ -8,9 +8,10 @@ import { NavLink } from "react-router-dom";
 import { useCart } from "../../hooks/useCart";
 
 export function Header() {
-  const { cart  } = useCart()
-  const cartSize = cart.length; //quantos arrays cart possui  
+  const { cart } = useCart();
 
+  const cartSize = cart.length; 
+  
   return (
     <HeaderContainer>
       <nav>

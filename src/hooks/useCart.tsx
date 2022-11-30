@@ -1,100 +1,111 @@
 import { createContext, ReactNode, useContext, useState } from "react";
-import { Product } from "../Pages/Home/components/SessionCoffees";
 import { produce } from 'immer';
 import { api } from "../services/api";
+import { Product } from "../@types/coffee";
+import { toast } from "react-toastify";
+import { formatPrice } from "../utils/formatPrice";
+
+export interface Cart extends Product {
+    amount: number;
+  }
 
 interface CartProviderProps {
     children: ReactNode;
 }   
 
-export interface Cart {
+export interface UpdateAmountProps {
     id: number;
-    price: number;
-    image: string;
-    title: string;
-    resume: string;
-    tags: {
-        tag1: string;
-        tag2: string;
-        tag3: string;
-    };
-    amount: number;
-  }
-
-  interface  UpdateAmountProps {
-    id: number;
-    amount: number;
-  }
-
-  interface AmountStateProps {
-    id: number;
-    number: number
-  }
-
-  interface CartContextData {
-    cart: Cart[];
-    amount: number;
-    amountState: (number: number) => void;
-    addCart: (id: number) => Promise<void>;
-    updateAmount: (props: UpdateAmountProps) => void;
+    type: "increment" | "decrement";
 }
+
+interface CartFormatted extends Cart{
+      priceFormatted: string;
+      subTotal: string;
+  }
+
+interface CartContextData {
+    cart: Cart[];
+    addCart: (product: Cart) => void;
+    removeCart: (id: number) => void;
+    updateAmount: (id: number, type:  "increment" | "decrement") => void;
+    priceFormattedAndSubTotal: CartFormatted[];
+    totalProducts: number;
+    totalShipping: number;
+} 
 
 export const CartContext = createContext({} as CartContextData);
 
 export function CartProvider({ children }: CartProviderProps) {
     const [cart, setCart] = useState<Cart[]>([]);
-    const [amount, setAmount] = useState(1);
 
-    function amountState(number: number) {
-        setAmount(number);
-    }
+    const priceFormattedAndSubTotal = cart.map(product => ({
+        ...product,
+        priceFormatted: formatPrice(product.price),
+        subTotal: formatPrice(product.price * product.amount),
+     }));
 
-    async function addCart(id: number) {
+    const totalProducts = 
+            cart.reduce((sumTotal, product) => {
+            return sumTotal + product.price * product.amount;
+        }, 0)
+       
+    const totalShipping = totalProducts + 3.50;
+
+    function addCart(product: Cart) {
         const copyCart = [...cart];
 
-        const productExists = copyCart.find(product => product.id === id); 
+        const productIndex = copyCart.findIndex(cartItem => cartItem.id === product.id); 
         
-        const currentAmount = productExists ? productExists.amount : 0;
-
-        const increment = currentAmount + 1;
-        setAmount(increment)
-        
-
-        if (productExists) {
-            productExists.amount = amount;
+        if (productIndex < 0) {
+            copyCart.push(product);
+            toast.success('Item adicinado no carrinho.');     
         } else {
-            const product = await api.get(`/coffees/${id}`);
-
-            const newProduct: Cart = {
-                ...product.data,
-                amount,
-            };
-
-            copyCart.push(newProduct);
+            copyCart[productIndex].amount += product.amount;
         }
 
         setCart(copyCart);
     }
 
-      
+    function removeCart(id: number) {
+        const copyCart = [...cart];
+        const productIndex = copyCart.findIndex(cartItem => cartItem.id === id); 
 
-      function updateAmount({id, amount}: UpdateAmountProps) {
-        if (amount <= 0) {
-            return;
-        }
-       
-        const copyCart = [...cart]
-        const productExists = copyCart.find(product => product.id === id)
-
-        if (productExists) {
-            productExists.amount = amount;
+        if (productIndex >= 0 ) {
+            copyCart.splice(productIndex, 1)
+            setCart(copyCart)
         } else {
-            throw Error;
+            throw Error()
         }
-      }
+    }
+      
+    function updateAmount(
+        id: number,
+        type: "increment" | "decrement"
+    ) {
+        const copyCart = [...cart];
+        const productIndex = copyCart.findIndex(product => product.id === id);
+
+        if (productIndex >= 0) {
+            const item = copyCart[productIndex];
+            copyCart[productIndex].amount = 
+                type === "increment" ? item.amount + 1 : item.amount - 1;
+        } else {
+            throw Error();
+        }
+
+        setCart(copyCart);
+    }
 
     return (
-        <CartContext.Provider value={{ cart, amount, amountState, addCart, updateAmount }}>
+        <CartContext.Provider value={{ 
+            cart, 
+            addCart, 
+            removeCart, 
+            updateAmount, 
+            priceFormattedAndSubTotal, 
+            totalProducts, 
+            totalShipping 
+        }}>
             { children }
         </CartContext.Provider>
     )
