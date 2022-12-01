@@ -1,8 +1,10 @@
-import { HeaderContainer, Localization, Cart } from "./styles";
+import { HeaderContainer, Localization } from "./styles";
+
 import { HiLocationMarker } from 'react-icons/hi'
 import { IoCart } from 'react-icons/io5';
 
 import logo from '../../assets/Logo.svg';
+
 import { ButtonCart } from "../ButtonCart";
 import { NavLink } from "react-router-dom";
 import { useCart } from "../../hooks/useCart";

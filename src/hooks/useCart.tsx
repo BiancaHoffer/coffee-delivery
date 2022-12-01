@@ -1,9 +1,9 @@
 import { createContext, ReactNode, useContext, useState } from "react";
-import { produce } from 'immer';
-import { api } from "../services/api";
-import { Product } from "../@types/coffee";
+
 import { toast } from "react-toastify";
+
 import { formatPrice } from "../utils/formatPrice";
+import { Product } from "../@types/coffee";
 
 export interface Cart extends Product {
     amount: number;
@@ -28,6 +28,7 @@ interface CartContextData {
     addCart: (product: Cart) => void;
     removeCart: (id: number) => void;
     updateAmount: (id: number, type:  "increment" | "decrement") => void;
+    clearCart: () => void;
     priceFormattedAndSubTotal: CartFormatted[];
     totalProducts: number;
     totalShipping: number;
@@ -36,7 +37,16 @@ interface CartContextData {
 export const CartContext = createContext({} as CartContextData);
 
 export function CartProvider({ children }: CartProviderProps) {
-    const [cart, setCart] = useState<Cart[]>([]);
+    const [cart, setCart] = useState<Cart[]>(() => {
+
+        const storageCart = localStorage.getItem('@CoffeeDelivery:cart');
+
+        if (storageCart) {
+            return JSON.parse(storageCart);
+        }
+
+        return [];
+    });
 
     const priceFormattedAndSubTotal = cart.map(product => ({
         ...product,
@@ -64,6 +74,7 @@ export function CartProvider({ children }: CartProviderProps) {
         }
 
         setCart(copyCart);
+        localStorage.setItem('@CoffeeDelivery:cart', JSON.stringify(copyCart));
     }
 
     function removeCart(id: number) {
@@ -73,6 +84,7 @@ export function CartProvider({ children }: CartProviderProps) {
         if (productIndex >= 0 ) {
             copyCart.splice(productIndex, 1)
             setCart(copyCart)
+            localStorage.setItem('@CoffeeDelivery:cart', JSON.stringify(copyCart));
         } else {
             throw Error()
         }
@@ -94,6 +106,11 @@ export function CartProvider({ children }: CartProviderProps) {
         }
 
         setCart(copyCart);
+        localStorage.setItem('@CoffeeDelivery:cart', JSON.stringify(copyCart));
+    }
+
+    function clearCart() {
+        setCart([]);
     }
 
     return (
@@ -104,7 +121,8 @@ export function CartProvider({ children }: CartProviderProps) {
             updateAmount, 
             priceFormattedAndSubTotal, 
             totalProducts, 
-            totalShipping 
+            totalShipping,
+            clearCart
         }}>
             { children }
         </CartContext.Provider>

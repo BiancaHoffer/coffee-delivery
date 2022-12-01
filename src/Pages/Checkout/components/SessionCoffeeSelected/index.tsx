@@ -6,7 +6,6 @@ import { useCart } from "../../../../hooks/useCart";
 
 import { CoffeeSelected } from "../CoffeeSelected";
 import { ConfirmOrder } from "../ConfirmOrder";
-import { formatPrice } from "../../../../utils/formatPrice";
 
 export function SessionCoffeeSelected() {
   const { cart, priceFormattedAndSubTotal } = useCart();

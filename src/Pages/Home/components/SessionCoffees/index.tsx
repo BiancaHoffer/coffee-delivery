@@ -5,12 +5,8 @@ import {
 
 import { useState, useEffect } from 'react';
 
-import { IoCart } from "react-icons/io5";
-
-import { ButtonCart } from "../../../../components/ButtonCart";
-
 import { api } from "../../../../services/api";
-import { BiMinus, BiPlus } from "react-icons/bi";
+
 import { formatPrice } from "../../../../utils/formatPrice";
 import { useCart } from "../../../../hooks/useCart";
 import { CoffeeCard } from "../CoffeeCard";

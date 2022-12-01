@@ -6,7 +6,7 @@ interface ItemListConfirmedOrderProps {
   variant: IconVariant; 
 } 
 
-export function ItemListConfirmedOrder({ children, variant }: ItemListConfirmedOrderProps) {
+export function ItemListConfirmedOrder({ children,  variant }: ItemListConfirmedOrderProps) {
   return (
     <ContainerItemListConfirmedOrder>
       <ContentIcon variant={variant}>

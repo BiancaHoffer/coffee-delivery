@@ -46,6 +46,7 @@ export function CoffeeSelected({ item }: CoffeeSelectedProps) {
       <div className="ContentAmountAndButtonRemove">
         <ContainerAmountCoffee>
           <button
+            type='button'
             onClick={() => handleDecrement(item.id)}
             disabled={item.amount <= 1}
           >
@@ -57,6 +58,7 @@ export function CoffeeSelected({ item }: CoffeeSelectedProps) {
             readOnly
           />
           <button
+            type='button'
             onClick={() => handleIncrement(item.id)}
           >
             <BiPlus size={16} />
@@ -65,6 +67,7 @@ export function CoffeeSelected({ item }: CoffeeSelectedProps) {
 
         <button
           className="buttonRemove"
+          type='button'
           onClick={() => handleRemoveItem(item.id)}
         >
           <CiTrash size={15} color='#8047F8' />

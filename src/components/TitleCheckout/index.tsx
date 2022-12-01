@@ -1,5 +1,4 @@
 import { ReactNode } from "react";
-import { HiOutlineLocationMarker } from "react-icons/hi";
 import { TitleAddress } from "./styles";
 
 interface TitleCheckoutProps {

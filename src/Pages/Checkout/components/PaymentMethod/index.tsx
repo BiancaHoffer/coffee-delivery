@@ -1,5 +1,4 @@
-import { ReactNode, EventHandler, MouseEventHandler } from 'react';
-import { useFormContext } from 'react-hook-form';
+import { ReactNode, MouseEventHandler } from 'react';
 import { RadioBox } from './styles';
 
 interface PaymentMethodProps {
@@ -14,7 +13,6 @@ export function PaymentMethod({ isActive, onClick, children }: PaymentMethodProp
             type="button"
             onClick={onClick}
             isActive={isActive}
-            
         >
             { children }
         </RadioBox>

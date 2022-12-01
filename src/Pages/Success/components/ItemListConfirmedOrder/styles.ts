@@ -18,4 +18,10 @@ const iconVariants = {
 
 export const ContentIcon = styled.div<IconVariantProps>`
     ${props => { return css`background-color: ${iconVariants[props.variant]}` }};
+    padding: 0.5rem;
+    border-radius: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
 `;

@@ -1,12 +1,11 @@
 import { useState  } from 'react';
 
-import { 
-  CheckoutContainer, 
-  AddressAndPaymentContainer, 
-  CoffeeSelectedContainer
-} from "./styles";
-
 import { useForm, FormProvider } from 'react-hook-form';
+
+import { toast } from 'react-toastify';
+
+import { useNavigate } from 'react-router-dom';
+import { useCart } from '../../hooks/useCart';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as zod from 'zod';
@@ -14,13 +13,16 @@ import * as zod from 'zod';
 import { SessionPayment } from './components/SessionPayment';
 import { SessionAddress } from './components/SessionAddress';
 import { SessionCoffeeSelected } from './components/SessionCoffeeSelected';
-import { toast } from 'react-toastify';
 
-import { useNavigate } from 'react-router-dom';
+import { 
+  CheckoutContainer, 
+  AddressAndPaymentContainer, 
+  CoffeeSelectedContainer
+} from "./styles";
 
 const newFormValidationSchema = zod.object({
   cep: zod.string().min(1, 'Informe o CEP'),
-  street: zod.string().min(1, 'Informe a rua'),
+  street: zod.string().min(1, 'Informe a Rua'),
   number: zod.string().min(1, "Informe o Número"),
   complement: zod.string(),
   district: zod.string().min(1, "Informe o Bairro"),
@@ -28,12 +30,14 @@ const newFormValidationSchema = zod.object({
   uf: zod.string().min(1, "Informe a UF"),
 })
 
-export type OrderData = zod.infer<typeof newFormValidationSchema>
+export type OrderData = zod.infer<typeof newFormValidationSchema>;
 
-type NewFormData = OrderData
+type NewFormData = OrderData;
 
 export function Checkout() {
-  const [dataForm, setDataForm] = useState<NewFormData>()
+  const [dataForm, setDataForm] = useState<NewFormData>();
+
+  const { clearCart } = useCart();
   const navigate = useNavigate();
     
   const newForm = useForm<NewFormData>({
@@ -52,16 +56,14 @@ export function Checkout() {
   const { handleSubmit } = newForm;
 
   function handleNewForm(data: NewFormData) {
-    if ( data !== undefined  ) {
-      setDataForm(data)
-      console.log(data)
-      
+    if ( data !== undefined ) {
+      setDataForm(data);
+      clearCart();
+      navigate('/checkout/success');
     } else {
-      toast.error("Corrigir")
+      toast.error("Erro, tente novamente mais tarde.")
       return;
-    }
-
-    navigate('/checkout/success')
+    } 
   }
   
   return (

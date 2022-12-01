@@ -2,7 +2,9 @@ import { FaBox } from "react-icons/fa";
 import { IoCart } from "react-icons/io5";
 import { RiTimer2Fill } from "react-icons/ri";
 import { SiCoffeescript } from "react-icons/si";
+
 import { ItemListOfQualities } from "../ItemListOfQualities";
+
 import { ListContainer } from "./styles";
 
 export function BannerListOfQualities() {

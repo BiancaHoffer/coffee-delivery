@@ -1,15 +1,18 @@
-import { useState } from 'react'
+import { useState } from 'react';
+
 import { NavLink } from "react-router-dom";
+
+import { useFormContext } from 'react-hook-form';
+
 import { useCart, Cart } from "../../../../hooks/useCart";
 import { formatPrice } from "../../../../utils/formatPrice";
+
 import { ContainerConfirmOrder, Price, TotalValue } from "./styles";
-import { useFormContext } from 'react-hook-form';
 
 
 export function ConfirmOrder() {
   const { totalProducts, totalShipping } = useCart();
-  const { watch } = useFormContext();
-
+  
   return (
     <ContainerConfirmOrder>
       <Price>
