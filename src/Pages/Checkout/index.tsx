@@ -1,4 +1,4 @@
-import { useState, FormEvent } from 'react';
+import { useState  } from 'react';
 
 import { 
   CheckoutContainer, 
@@ -14,17 +14,18 @@ import * as zod from 'zod';
 import { SessionPayment } from './components/SessionPayment';
 import { SessionAddress } from './components/SessionAddress';
 import { SessionCoffeeSelected } from './components/SessionCoffeeSelected';
+import { toast } from 'react-toastify';
 
-
+import { useNavigate } from 'react-router-dom';
 
 const newFormValidationSchema = zod.object({
-  cep: zod.string().max(8, 'Informe o CEP').min(8, 'Informe o CEP'),
+  cep: zod.string().min(1, 'Informe o CEP'),
   street: zod.string().min(1, 'Informe a rua'),
-  number: zod.string().min(1, "Informe o número da casa"),
-  complement: zod.string().min(3).optional(),
-  district: zod.string().min(1, "Informe o bairro"),
-  city: zod.string().min(1, "Informe o bairro"),
-  uf: zod.string().min(1, "Informe o estado").max(2, "Informe o estado"),
+  number: zod.string().min(1, "Informe o Número"),
+  complement: zod.string(),
+  district: zod.string().min(1, "Informe o Bairro"),
+  city: zod.string().min(1, "Informe a Cidade"),
+  uf: zod.string().min(1, "Informe a UF"),
 })
 
 export type OrderData = zod.infer<typeof newFormValidationSchema>
@@ -32,6 +33,9 @@ export type OrderData = zod.infer<typeof newFormValidationSchema>
 type NewFormData = OrderData
 
 export function Checkout() {
+  const [dataForm, setDataForm] = useState<NewFormData>()
+  const navigate = useNavigate();
+    
   const newForm = useForm<NewFormData>({
     resolver: zodResolver(newFormValidationSchema),
     defaultValues: {
@@ -45,10 +49,19 @@ export function Checkout() {
     }
   })
 
-  const { handleSubmit, register, watch, reset } = newForm;
+  const { handleSubmit } = newForm;
 
   function handleNewForm(data: NewFormData) {
-    console.log(data);
+    if ( data !== undefined  ) {
+      setDataForm(data)
+      console.log(data)
+      
+    } else {
+      toast.error("Corrigir")
+      return;
+    }
+
+    navigate('/checkout/success')
   }
   
   return (

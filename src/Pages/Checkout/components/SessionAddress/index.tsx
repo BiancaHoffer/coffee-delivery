@@ -49,12 +49,14 @@ export function SessionAddress() {
               placeholder="Rua"
               className="street"
               {...register("street")}
+              error={errors.street?.message}
             />
             <Input 
               type="number"  
               placeholder="Número"
               className="number"
               {...register("number")}
+              error={errors.number?.message}
             />
             <ContentInputComplement>
                 <InputComplement
@@ -68,16 +70,19 @@ export function SessionAddress() {
               placeholder="Bairro"
               className="district"
               {...register("district")}
+              error={errors.district?.message}
             />
             <Input 
               placeholder="Cidade"
               className="city"
               {...register("city")}
+              error={errors.city?.message}
             />
             <Input 
               placeholder="UF" 
               className="uf"
               {...register("uf")}
+              error={errors.uf?.message}
             />
           </ContainerInputs>
         </ContainerAddress>

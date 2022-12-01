@@ -36,6 +36,7 @@ export const ContainerInputs = styled.div`
 export const ContentInputComplement = styled.div`
     grid-column: 2 / 4;
     width: 21.75rem;
+    height: 2.625rem;
     background: ${props => props.theme["gray-100"]};
     border-radius: 0.25rem; 
 

@@ -12,10 +12,28 @@ import {
   } from "./styles";
   
 import { TitleCheckout } from '../../../../components/TitleCheckout';
+import { useFormContext } from 'react-hook-form';
+
+const paymentMethods = {
+  credit: {
+    label: "Cartão de Crédito",
+    icon: <CiCreditCard2 size={16} color='#8047F8' />,
+  },
+  debit: {
+    label: "Cartão de Débito",
+    icon: <CiCreditCard2 size={16} color='#8047F8' />,
+  },
+  money: {
+    label: "Dinheiro",
+    icon: <CiMoneyBill size={16} color='#8047F8' />,
+  }
+}
 
 export function SessionPayment() {
+  const { register } = useFormContext()
+
   const [typePayment, setTypePayment] = useState<'creditCard' | 'debitCard' | 'money'>('creditCard');
-  
+
     return (
         <DivPayment>
           <TitleCheckout 
@@ -29,9 +47,10 @@ export function SessionPayment() {
           />
 
           <ContentPaymentMethod>
-            <PaymentMethod 
+          <PaymentMethod 
               onClick={() => setTypePayment('creditCard')}
               isActive={typePayment === 'creditCard'}
+              //{...register(typePayment)}
             >
               <CiCreditCard2 size={16} color='#8047F8' /> 
               CARTÃO DE CRÉDITO

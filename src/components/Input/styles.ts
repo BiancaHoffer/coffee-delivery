@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 export const InputContent = styled.div`
     display: flex;
@@ -11,7 +11,11 @@ export const InputContent = styled.div`
     }
 `;
 
-export const InputBase = styled.input`
+interface InputStyleInputBaseProps {
+    hasError: boolean
+}
+
+export const InputBase = styled.input<InputStyleInputBaseProps>`
     background: ${props => props.theme["gray-100"]};
     border: 1px solid ${props => props.theme["gray-300"]};
     padding: 0.75rem;
@@ -28,4 +32,8 @@ export const InputBase = styled.input`
     &::-webkit-input-placeholder {
         color: ${props => props.theme["gray-400"]};
     }
+
+    ${({theme, hasError}) => hasError && css`
+        border-color: red;
+    `}
 `
