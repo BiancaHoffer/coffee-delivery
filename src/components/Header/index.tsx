@@ -27,7 +27,7 @@ export function Header() {
             Porto Alegre, SC
           </Localization>
 
-          <ButtonCart variant="yellow">
+          <ButtonCart variant="yellow" hoverActive="inactive">
             <NavLink to="/checkout" title="checkout">
               <IoCart size={22} color="#C47F17" /> 
               { !cartSize ? null :  <span>{cartSize}</span>}

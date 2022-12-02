@@ -1,12 +1,18 @@
 import styled from "styled-components";
 
 export interface ColorButtonProps {
-    variant: 'purple' | 'yellow'
+    variant: 'purple' | 'yellow';
+    hoverActive: 'purple' | 'inactive';
 }
 
 const colorButtonCart = {
     purple: '#4B2995',
     yellow : '#F1E9C9',
+}
+
+const hoverActive = {
+    purple:  '#8047F8',
+    inactive: null,
 }
 
 export const ContainerButtonCart = styled.button<ColorButtonProps>`
@@ -22,6 +28,12 @@ export const ContainerButtonCart = styled.button<ColorButtonProps>`
     align-items: center;
 
     position: relative;
+
+    transition: 0.3s;
+
+    &:hover {
+        background-color: ${props => hoverActive[props.hoverActive]}
+    }
 
     a {
         display: flex;

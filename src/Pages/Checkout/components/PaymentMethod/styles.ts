@@ -2,12 +2,15 @@ import styled from 'styled-components'
 
 interface RadioBoxProps {
     isActive: boolean;
+    
 }
 
 const colors = {
     purple: '#EBE5F9',
     purpleDark: '#8047F8',
 };
+
+
 
 export const RadioBox = styled.button<RadioBoxProps>`
     background: ${props => props.isActive ? colors.purple : props.theme['gray-300']};
@@ -19,9 +22,13 @@ export const RadioBox = styled.button<RadioBoxProps>`
     min-width: 10.938rem;
 
     cursor: pointer;
-    transition: 0.2s;
+    transition: 0.3s;
 
     display: flex;
     align-items: center;
     gap: 0.75rem;
+
+    &:hover {
+        filter: brightness(0.9);
+    }
 `

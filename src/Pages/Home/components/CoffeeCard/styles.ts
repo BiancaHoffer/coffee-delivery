@@ -121,5 +121,9 @@ export const ContainerAmountCoffee = styled.div`
         &:disabled {
             color: ${props => props.theme["gray-400"]};
         }
+
+        &:hover {
+            color: ${props => props.theme['purple-800']};
+        }
     }
 `

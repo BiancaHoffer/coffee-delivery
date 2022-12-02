@@ -16,6 +16,12 @@ export const ContainerConfirmOrder = styled.div`
         cursor: pointer;
         color: ${props => props.theme.white};
 
+        transition: 0.3s;
+
+        &:hover {
+            background: ${props => props.theme["yellow-800"]};
+        }
+
         &:disabled {
             background: ${props => props.theme["yellow-800"]};
         }

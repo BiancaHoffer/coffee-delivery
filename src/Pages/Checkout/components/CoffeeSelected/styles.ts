@@ -51,6 +51,12 @@ export const CardCoffeeSelected = styled.div`
         justify-content: center;
         align-items: center;
         gap: 0.25rem;
+
+        transition: 0.3s;
+
+        &:hover {
+            filter: brightness(0.9);
+        }
     }
 `;
 
@@ -94,6 +100,10 @@ export const ContainerAmountCoffee = styled.div`
 
         &:disabled {
             color: ${props => props.theme["gray-400"]};
+        }
+
+        &:hover {
+            color: ${props => props.theme['purple-800']};
         }
     }
 `

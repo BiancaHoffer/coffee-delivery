@@ -3,13 +3,14 @@ import { ContainerButtonCart, ColorButtonProps } from "./styles";
 
 interface ButtonCartProps {
     variant: "purple" | "yellow";
+    hoverActive: 'purple' | 'inactive';
     children: ReactNode;
     onClick?: MouseEventHandler;
 }
 
-export function ButtonCart({ variant, children, onClick }: ButtonCartProps) {
+export function ButtonCart({ variant, hoverActive, children, onClick }: ButtonCartProps) {
     return (
-        <ContainerButtonCart variant={variant} onClick={onClick}>
+        <ContainerButtonCart variant={variant} hoverActive={hoverActive} onClick={onClick}>
             { children }
         </ContainerButtonCart>
     )

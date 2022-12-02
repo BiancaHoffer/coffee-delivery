@@ -81,6 +81,7 @@ export function CoffeeCard({ product }: CoffeeCardProps) {
             </button>
           </ContainerAmountCoffee>
           <ButtonCart
+            hoverActive='purple'
             variant="purple"
             onClick={() => handleAddCart(product)}
           >
