@@ -3,7 +3,10 @@ import {
   CoffeeList,
 } from "./styles";
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, CSSProperties } from 'react';
+
+import { toast } from "react-toastify";
+import { BeatLoader, BarLoader } from "react-spinners";
 
 import { api } from "../../../../services/api";
 
@@ -12,14 +15,21 @@ import { useCart } from "../../../../hooks/useCart";
 import { CoffeeCard } from "../CoffeeCard";
 import { Product } from "../../../../@types/coffee";
 import axios from "axios";
+import { Loading } from "../../../../components/Loading";
 
 export interface ProductFormatted extends Product {
   priceFormattd: string; 
 }
 
-interface CartItemsAmount {
-  [key: number]: number;
-}
+// interface CartItemsAmount {
+//  [key: number]: number;
+//}
+
+const override: CSSProperties = {
+  display: "block",
+  margin: "0 auto",
+  borderColor: "red",
+};
 
 export function SessionCoffees() {
    /*// listar quantiadade de itens por id
@@ -33,13 +43,13 @@ export function SessionCoffees() {
   }, {} as CartItemsAmount)*/
 
   const [products, setProducts] = useState<ProductFormatted[]>([]);
-
-  const { cart } = useCart();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function getProducts() {
-       const response = await axios.get<Product[]>('https://api-coffees.herokuapp.com/coffees');
-        console.log(response)
+      setLoading(true);
+      try {
+       const response = await api.get<Product[]>('/coffees');
 
        const data = response.data.map(product => ({
         ...product, 
@@ -47,9 +57,25 @@ export function SessionCoffees() {
        })) 
        
        setProducts(data);
+      } catch (error) {
+        toast.error("Erro ao renderizar lista de cafés, tente novamente mais tarde.")
+
+        setLoading(false);
+      } finally {
+        setLoading(false);
+      }
     }
     getProducts();
    }, []);
+
+   if (loading) {
+    return (
+      <CoffeeSession>
+        <h1>Nossos cafés</h1>
+        <Loading />
+      </CoffeeSession>
+    )
+   }
 
   return (
     <CoffeeSession>
@@ -57,7 +83,9 @@ export function SessionCoffees() {
       <CoffeeList>
         {products.map((product) => {
           return (
-            <CoffeeCard key={product.id} product={product} />
+            <>
+              <CoffeeCard key={product.id} product={product} />
+            </>  
           )
         })}
       </CoffeeList>

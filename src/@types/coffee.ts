@@ -4,10 +4,6 @@ export interface Product {
     image: string;
     title: string;
     resume: string;
-    tags: {
-        tag1: string;
-        tag2: string;
-        tag3: string;
-    };
+    tags: string[];
     amount: number;
 }

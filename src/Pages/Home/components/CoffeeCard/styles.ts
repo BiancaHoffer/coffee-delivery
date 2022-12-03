@@ -45,7 +45,7 @@ export const Tags = styled.div`
     justify-content: space-evenly;
     align-items: center;
 
-    p {
+    .tag {
         background: ${props => props.theme["yellow-300"]};
         padding: 0.25rem 0.5rem; 
         border-radius: 6.25rem;

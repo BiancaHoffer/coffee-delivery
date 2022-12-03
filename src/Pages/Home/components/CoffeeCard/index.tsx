@@ -7,14 +7,13 @@ import { ProductFormatted } from '../SessionCoffees';
 import { useState } from "react";
 
 interface CoffeeCardProps {
-  key: number;
   product: ProductFormatted;
 }
 
 export function CoffeeCard({ product }: CoffeeCardProps) {
   const [amount, setAmount] = useState(1);
   const { cart, addCart } = useCart();
-  
+
   function handleAddCart(product: Cart) {
     const newProduct = {
       ...product,
@@ -37,20 +36,18 @@ export function CoffeeCard({ product }: CoffeeCardProps) {
   return (
     <ContainerCoffeeCard>
       <img src={product.image} alt={`Imagem ${product.title}`} />
+
       <Tags>
-        <p className="tag">
-          {product.tags.tag1}
-        </p>
-        {product.tags.tag2 && (
-          <p className="tag">
-            {product.tags.tag2}
-          </p>
-        )}
-        {product.tags.tag3 && (
-          <p className="tag">
-            {product.tags.tag3}
-          </p>
-        )}
+        {product.tags?.map(tag => {
+          return (
+            <span 
+              key={tag} 
+              className="tag"
+            >
+              {tag}
+            </span>
+          )
+        })}
       </Tags>
 
       <h2>{product.title}</h2>
