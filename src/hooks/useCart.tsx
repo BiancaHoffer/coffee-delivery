@@ -18,7 +18,7 @@ export interface UpdateAmountProps {
     type: "increment" | "decrement";
 }
 
-interface CartFormatted extends Cart{
+interface CartFormatted extends Cart {
       priceFormatted: string;
       subTotal: string;
   }

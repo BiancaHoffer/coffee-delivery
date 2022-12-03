@@ -6,15 +6,12 @@ import {
 import { useState, useEffect, CSSProperties } from 'react';
 
 import { toast } from "react-toastify";
-import { BeatLoader, BarLoader } from "react-spinners";
 
 import { api } from "../../../../services/api";
 
 import { formatPrice } from "../../../../utils/formatPrice";
-import { useCart } from "../../../../hooks/useCart";
 import { CoffeeCard } from "../CoffeeCard";
 import { Product } from "../../../../@types/coffee";
-import axios from "axios";
 import { Loading } from "../../../../components/Loading";
 
 export interface ProductFormatted extends Product {
