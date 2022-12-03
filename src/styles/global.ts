@@ -28,6 +28,7 @@ export const GlobalStyle = createGlobalStyle`
         outline: 0;
     } 
 
+
     input[type=number]::-webkit-inner-spin-button { 
     -webkit-appearance: none;
     
@@ -36,5 +37,18 @@ export const GlobalStyle = createGlobalStyle`
     -moz-appearance: textfield;
     appearance: textfield;
 
+    }
+
+    // scrollbar
+    body::-webkit-scrollbar {
+    width: 6px;
+    }
+
+    body::-webkit-scrollbar-track {
+        background: #E6E5E5;     
+    }
+
+    body::-webkit-scrollbar-thumb {
+        background-color: #8D8686;
     }
 `
