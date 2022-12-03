@@ -11,6 +11,7 @@ import { formatPrice } from "../../../../utils/formatPrice";
 import { useCart } from "../../../../hooks/useCart";
 import { CoffeeCard } from "../CoffeeCard";
 import { Product } from "../../../../@types/coffee";
+import axios from "axios";
 
 export interface ProductFormatted extends Product {
   priceFormattd: string; 
@@ -37,7 +38,8 @@ export function SessionCoffees() {
 
   useEffect(() => {
     async function getProducts() {
-       const response = await api.get<Product[]>('/coffees');
+       const response = await axios.get<Product[]>('https://api-coffees.herokuapp.com/coffees');
+        console.log(response)
 
        const data = response.data.map(product => ({
         ...product, 
